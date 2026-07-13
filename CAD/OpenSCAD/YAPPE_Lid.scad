@@ -1,29 +1,19 @@
 //=====================================================================
-// BlitzBox
+// YAPPE
 // Lid
 //
-// Project : BlitzBox
-// File    : BlitzBox_Lid.scad
-// Author  : Björn Verbruggen + ChatGPT
+// Project : YAPPE
+// File    : YAPPE_Lid.scad
+// Author  : Björn Verbruggen 
 //
 // Description
 // ------------
-// Lid for the BlitzBox enclosure.
-//
-// The lid contains:
-//
-// - Labyrinth seal
-// - Screw holes
-// - UTP cable entry
-// - Condensation drain / vent
-// - LED viewing hole
+// Lid for YAPPE.
 //
 // Version
 // -------
 // v0.1
 //=====================================================================
-
-use <modules\CableClamp.scad>
 
 //=====================================================================
 // PARAMETERS
@@ -34,8 +24,8 @@ use <modules\CableClamp.scad>
 // Internal dimensions
 //--------------------------------------------------
 
-inside_length = 172;      // mm
-inside_width  = 172;      // mm
+inside_length = 100;      // mm
+inside_width  = 150;      // mm
 
 
 //--------------------------------------------------
@@ -45,6 +35,11 @@ inside_width  = 172;      // mm
 lid_thickness = 4;         // mm
 lid_clearance = -0.25;
 
+//--------------------------------------------------
+// Lid overhang
+//--------------------------------------------------
+
+lid_overhang = 10;     // mm per zijde
 //--------------------------------------------------
 // Wall dimensions
 //--------------------------------------------------
@@ -62,7 +57,7 @@ lid_screw_hole_diameter = 3.3;      // Free fit for M3
 // Labyrinth
 //--------------------------------------------------
 
-labyrinth_height    = 8;      // Vertical skirt
+labyrinth_height    = 40;      // Vertical skirt
 labyrinth_thickness = 2;      // Wall thickness
 labyrinth_clearance = 0.35;   // Fit with base
 labyrinth_margin = 3;          // mm
@@ -91,22 +86,7 @@ screw_post_corner_overlap = 2;
 corner_radius = 8;         // mm
 
 
-//--------------------------------------------------
-// Cable entry
-//--------------------------------------------------
 
-cable_x = 15;
-cable_y = 121;
-
-cable_rotation = 0;
-
-
-//--------------------------------------------------
-// Cable clamp
-//--------------------------------------------------
-
-clamp_width  = 20;
-clamp_length = 18;
 
 
 //--------------------------------------------------
@@ -511,29 +491,6 @@ module rj45_slot()
 
 
 
-//--------------------------------------------------
-// LED window
-//--------------------------------------------------
-
-module led_window()
-{
-
-    // TODO
-
-}
-
-
-
-//--------------------------------------------------
-// Vent holes
-//--------------------------------------------------
-
-module vent_holes()
-{
-
-    // TODO
-
-}
 
 
 
@@ -556,14 +513,14 @@ module lid()
             // Cable clamp
             //--------------------------------------------------
 
-            translate([
-                cable_x - clamp_width/2,
-                cable_y - clamp_length/2,
-                lid_thickness
-            ])
-            rotate([0,0,cable_rotation])
-                cable_clamp(true);
-
+//            translate([
+//                cable_x - clamp_width/2,
+//                cable_y - clamp_length/2,
+//                lid_thickness
+//            ])
+//            rotate([0,0,cable_rotation])
+//                cable_clamp(true);
+//
         }
 
 
@@ -573,11 +530,8 @@ module lid()
 
         screw_holes();
 
-        rj45_slot();
+ //       rj45_slot();
 
-        led_window();
-
-        vent_holes();
 
         labyrinth_post_clearance();
 

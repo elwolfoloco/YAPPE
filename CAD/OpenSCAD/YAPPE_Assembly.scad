@@ -26,7 +26,7 @@
 
 exploded = true;
 
-exploded_distance = 40;      // mm
+exploded_distance = 50;      // mm
 
 
 
@@ -34,8 +34,8 @@ exploded_distance = 40;      // mm
 // INCLUDE FILES
 //=====================================================================
 
-include <BlitzBox_Base.scad>
-include <BlitzBox_Lid.scad>
+include <YAPPE_Base.scad>
+include <YAPPE_Lid.scad>
 
 
 
