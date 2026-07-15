@@ -26,43 +26,43 @@ module corner(x, y, height, radius)
 
 
 //--------------------------------------------------
-// Outside shell
+// Bottom plate
 //--------------------------------------------------
 
-module shell(
-    outside_length,
-    outside_width,
-    outside_height,
+module bottom(
+    bottom_length,
+    bottom_width,
+    bottom_thickness,
     corner_radius
 )
 {
     hull()
     {
         corner(
-            -(outside_length / 2) + corner_radius,
-            -(outside_width / 2) + corner_radius,
-            outside_height,
+            -(bottom_length / 2) + corner_radius,
+            -(bottom_width / 2) + corner_radius,
+            bottom_thickness,
             corner_radius
         );
 
         corner(
-             (outside_length / 2) - corner_radius,
-            -(outside_width / 2) + corner_radius,
-            outside_height,
+             (bottom_length / 2) - corner_radius,
+            -(bottom_width / 2) + corner_radius,
+            bottom_thickness,
             corner_radius
         );
 
         corner(
-             (outside_length / 2) - corner_radius,
-             (outside_width / 2) - corner_radius,
-            outside_height,
+             (bottom_length / 2) - corner_radius,
+             (bottom_width / 2) - corner_radius,
+            bottom_thickness,
             corner_radius
         );
 
         corner(
-            -(outside_length / 2) + corner_radius,
-             (outside_width / 2) - corner_radius,
-            outside_height,
+            -(bottom_length / 2) + corner_radius,
+             (bottom_width / 2) - corner_radius,
+            bottom_thickness,
             corner_radius
         );
     }
@@ -70,104 +70,151 @@ module shell(
 
 
 //--------------------------------------------------
-// Inside cavity
+// Wall
 //--------------------------------------------------
 
-module cavity(
-    inside_length,
-    inside_width,
-    inside_height,
-    wall_thickness,
-    bottom_thickness,
-    corner_radius,
-    boolean_overlap = 1
-)
-{
-    translate([
-        0,
-        0,
-        bottom_thickness
-    ])
+module wall(
+    bottom_length,
+    bottom_width,
 
-    hull()
-    {
-        corner(
-            -(inside_length / 2) + corner_radius,
-            -(inside_width / 2) + corner_radius,
-            inside_height + boolean_overlap,
-            corner_radius
-        );
-
-        corner(
-             (inside_length / 2) - corner_radius,
-            -(inside_width / 2) + corner_radius,
-            inside_height + boolean_overlap,
-            corner_radius
-        );
-
-        corner(
-             (inside_length / 2) - corner_radius,
-             (inside_width / 2) - corner_radius,
-            inside_height + boolean_overlap,
-            corner_radius
-        );
-
-        corner(
-            -(inside_length / 2) + corner_radius,
-             (inside_width / 2) - corner_radius,
-            inside_height + boolean_overlap,
-            corner_radius
-        );
-    }
-}
-
-
-//--------------------------------------------------
-// Rounded box
-//--------------------------------------------------
-
-module box(
-    inside_length,
-    inside_width,
-    inside_height,
-
-    wall_thickness,
     bottom_thickness,
 
-    corner_radius,
+    wall_height,
+    wall_thickness,
 
-    boolean_overlap = 1
+    bottom_flange,
+
+    corner_radius
 )
 {
-    outside_length =
-        inside_length +
-        (2 * wall_thickness);
+    wall_length =
+        bottom_length -
+        (2 * bottom_flange);
 
-    outside_width =
-        inside_width +
-        (2 * wall_thickness);
-
-    outside_height =
-        inside_height +
-        bottom_thickness;
+    wall_width =
+        bottom_width -
+        (2 * bottom_flange);
 
     difference()
     {
-        shell(
-            outside_length,
-            outside_width,
-            outside_height,
+        //--------------------------------------------------
+        // Outside
+        //--------------------------------------------------
+
+        translate([0,0,bottom_thickness])
+
+        hull()
+        {
+            corner(
+                -(wall_length / 2) + corner_radius,
+                -(wall_width / 2) + corner_radius,
+                wall_height,
+                corner_radius
+            );
+
+            corner(
+                 (wall_length / 2) - corner_radius,
+                -(wall_width / 2) + corner_radius,
+                wall_height,
+                corner_radius
+            );
+
+            corner(
+                 (wall_length / 2) - corner_radius,
+                 (wall_width / 2) - corner_radius,
+                wall_height,
+                corner_radius
+            );
+
+            corner(
+                -(wall_length / 2) + corner_radius,
+                 (wall_width / 2) - corner_radius,
+                wall_height,
+                corner_radius
+            );
+        }
+
+
+        //--------------------------------------------------
+        // Cavity
+        //--------------------------------------------------
+
+        translate([0,0,bottom_thickness])
+
+        hull()
+        {
+            corner(
+                -(wall_length / 2) + corner_radius + wall_thickness,
+                -(wall_width / 2) + corner_radius + wall_thickness,
+                wall_height + 1,
+                corner_radius
+            );
+
+            corner(
+                 (wall_length / 2) - corner_radius - wall_thickness,
+                -(wall_width / 2) + corner_radius + wall_thickness,
+                wall_height + 1,
+                corner_radius
+            );
+
+            corner(
+                 (wall_length / 2) - corner_radius - wall_thickness,
+                 (wall_width / 2) - corner_radius - wall_thickness,
+                wall_height + 1,
+                corner_radius
+            );
+
+            corner(
+                -(wall_length / 2) + corner_radius + wall_thickness,
+                 (wall_width / 2) - corner_radius - wall_thickness,
+                wall_height + 1,
+                corner_radius
+            );
+        }
+    }
+}
+
+
+//--------------------------------------------------
+// Complete box
+//--------------------------------------------------
+
+module box(
+    bottom_length,
+    bottom_width,
+    bottom_thickness,
+
+    wall_height,
+    wall_thickness,
+
+    bottom_flange,
+
+    corner_radius
+)
+{
+    union()
+    {
+        bottom(
+            bottom_length,
+            bottom_width,
+            bottom_thickness,
             corner_radius
         );
 
-        cavity(
-            inside_length,
-            inside_width,
-            inside_height,
-            wall_thickness,
+        wall(
+            bottom_length,
+            bottom_width,
+
             bottom_thickness,
-            corner_radius,
-            boolean_overlap
+
+            wall_height,
+            wall_thickness,
+
+            bottom_flange,
+
+            corner_radius
         );
     }
 }
+
+//box();

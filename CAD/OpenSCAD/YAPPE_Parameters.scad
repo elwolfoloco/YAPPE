@@ -1,110 +1,56 @@
 //=====================================================================
 // YAPPE Parameters
-//
-// This file contains the mechanical design parameters.
-//
-// Geometry modules should not define dimensions.
-// They consume the values defined here.
-//
 //=====================================================================
 
-//--------------------------------------------------
-// Pump
-//--------------------------------------------------
-
-pump_length = 150;
-pump_width  = 65;
-pump_height = 60;
-
 
 //--------------------------------------------------
-// Clearances
+// Bottom plate
 //--------------------------------------------------
 
-pump_side_clearance = 5;
-pump_top_clearance  = 5;
+bottom_length = 170;       // mm
+bottom_width  = 85;        // mm
 
-box_fit_clearance = 0.35;
+bottom_thickness = 4;      // mm
 
-
-//--------------------------------------------------
-// Box
-//--------------------------------------------------
-
-wall_thickness  = 3;
-floor_thickness = 4;
-
-corner_radius = 8;
+corner_radius = 8;         // mm
 
 //--------------------------------------------------
-// Lid overlap
+// Wall
 //--------------------------------------------------
 
-lid_overlap = 15;         // mm
+bottom_flange = 3;         // mm
 
+wall_height   = 60;        // mm
+wall_thickness = 3;        // mm
 
 //--------------------------------------------------
-// Inner box inside dimensions
+// Bridges
 //--------------------------------------------------
 
-inner_inside_length =
-    pump_length +
-    (2 * pump_side_clearance);
+bridge_length = 90;
+bridge_width  = 8;
+bridge_height = 8;
 
-inner_inside_width =
-    pump_width +
-    (2 * pump_side_clearance);
+// Distance from centre to each bridge
 
-inner_inside_height =
-    pump_height +
-    pump_top_clearance;
+bridge_offset = 22;
+//--------------------------------------------------
+// Derived
+//--------------------------------------------------
+
+wall_length =
+    bottom_length -
+    (2 * bottom_flange);
+
+wall_width =
+    bottom_width -
+    (2 * bottom_flange);
 	
-//--------------------------------------------------
-// Inner box outside dimensions
-//--------------------------------------------------
 
-inner_outside_length =
-    inner_inside_length +
-    (2 * wall_thickness);
 
-inner_outside_width =
-    inner_inside_width +
-    (2 * wall_thickness);
 
-inner_outside_height =
-    inner_inside_height +
-    floor_thickness;
-	
-//--------------------------------------------------
-// Outer box inside dimensions
-//--------------------------------------------------
 
-outer_inside_length =
-    inner_outside_length +
-    (2 * box_fit_clearance);
 
-outer_inside_width =
-    inner_outside_width +
-    (2 * box_fit_clearance);
-
-outer_inside_height =
-    inner_outside_height +
-    lid_overlap;
-	
-//--------------------------------------------------
-// Assembly centres
-//--------------------------------------------------
-
-inner_center_x = inner_outside_length / 2;
-inner_center_y = inner_outside_width  / 2;
-
-outer_center_x =
-    (outer_inside_length + (2 * wall_thickness)) / 2;
-
-outer_center_y =
-    (outer_inside_width + (2 * wall_thickness)) / 2;
-	
-	
 //--------------------------------------------------
 // Rendering
 //--------------------------------------------------
