@@ -1,75 +1,51 @@
 //=====================================================================
-// BlitzBox
+// YAPPE
 // Assembly
 //
-// Project : BlitzBox
-// File    : BlitzBox_Assembly.scad
+// Exploded view for design verification.
 //
-// Description
-// ------------
-// Assembly test for Base and Lid.
-//
-// Version
-// -------
-// v0.1
 //=====================================================================
 
+use <YAPPE_InnerBox.scad>
+use <YAPPE_OuterBox.scad>
+
+include <YAPPE_Parameters.scad>
 
 
 //=====================================================================
-// PARAMETERS
+// VISUALISATION
 //=====================================================================
 
 //--------------------------------------------------
-// View
+// Assembly origin
 //--------------------------------------------------
 
-exploded = true;
+assembly_origin_x = 175;
+assembly_origin_y = 175;
 
-exploded_distance = 50;      // mm
-
-
-
-//=====================================================================
-// INCLUDE FILES
-//=====================================================================
-
-include <YAPPE_Base.scad>
-include <YAPPE_Lid.scad>
+exploded_height = 90;
 
 
-
-//=====================================================================
-// BASE
-//=====================================================================
-
-base();
-
-
-
-//=====================================================================
-// LID
-//=====================================================================
-
-lid_z =
-    exploded ?
-    outside_height + exploded_distance :
-    -outside_height;
-
-
+//--------------------------------------------------
+// Inner box
+//--------------------------------------------------
 
 translate([
-    outside_length / 2,
-    outside_width / 2,
-    lid_z -10
-])
-
-rotate([180,0,0])
-
-translate([
-    -outside_length / 2,
-    -outside_width / 2,
+    assembly_origin_x,
+    assembly_origin_y,
     0
 ])
+inner_box();
 
-lid();
+
+//--------------------------------------------------
+// Outer box
+//--------------------------------------------------
+
+translate([
+    assembly_origin_x,
+    assembly_origin_y,
+    inner_outside_height + exploded_height
+])
+rotate([180,0,0])
+    outer_box();
