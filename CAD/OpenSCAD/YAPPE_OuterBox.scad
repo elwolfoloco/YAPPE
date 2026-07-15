@@ -1,32 +1,83 @@
 //=====================================================================
 // YAPPE
-// Outer Box
-//
-// Rain cover.
-// Fits over the Inner Box.
-//
+// OuterBox
 //=====================================================================
 
-use <Modules/box.scad>;
-include <YAPPE_Parameters.scad>;
+include <YAPPE_Parameters.scad>
+
+use <Modules/box.scad>
+
+use <Modules/cable_slot.scad>
+use <Modules/hose_slot.scad>
+
+
+//=====================================================================
+// OUTER BOX
+//=====================================================================
 
 module outer_box()
 {
-    box(
-        outer_inside_length,
-        outer_inside_width,
-        outer_inside_height,
+    difference()
+    {
+        //--------------------------------------------------
+        // Positive geometry
+        //--------------------------------------------------
 
-        wall_thickness,
-        floor_thickness,
+box(
+    bottom_length + 6,
+    bottom_width + 6,
+    bottom_thickness,
 
-        corner_radius
-    );
+    wall_height,
+    wall_thickness,
+
+    bottom_flange - 1,
+
+    corner_radius
+);
+
+        //--------------------------------------------------
+        // Cable slot
+        //--------------------------------------------------
+
+        translate([
+            -((bottom_length + 2) / 2 +2),
+            0,
+            wall_height - 15
+        ])
+
+        rotate([0,0,90])
+
+        cable_slot(
+            50,
+            8,
+            20
+        );
+
+
+        //--------------------------------------------------
+        // Hose slot
+        //--------------------------------------------------
+
+        translate([
+             ((bottom_length + 2) / 2) - 10,
+            0,
+            wall_height - 15
+        ])
+
+        rotate([0,0,90])
+
+        hose_slot(
+            50,
+            12,
+            20
+        );
+    }
 }
 
 
 //=====================================================================
-// MAIN
+// Render
 //=====================================================================
 
 outer_box();
