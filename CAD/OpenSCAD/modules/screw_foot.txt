@@ -1,0 +1,34 @@
+//--------------------------------------------------
+// Screw foot
+//
+// Tapered foot with M3 clearance hole.
+//
+//--------------------------------------------------
+
+module screw_post()
+{
+    difference()
+    {
+        //--------------------------------------------------
+        // Main body
+        //--------------------------------------------------
+
+        cylinder(
+            h = inside_height,
+            d1 = screw_post_diameter,      // top
+            d2 = 4                         // bottom
+        );
+
+
+        //--------------------------------------------------
+        // Centre hole
+        //--------------------------------------------------
+
+        translate([0,0,-boolean_overlap])
+
+        cylinder(
+            h = inside_height + (2 * boolean_overlap),
+            d = screw_hole_diameter
+        );
+    }
+}

@@ -42,8 +42,8 @@ box(
 
         translate([
             -((bottom_length + 2) / 2 +2),
-            0,
-            wall_height - 15
+            -10,
+            wall_height - 5
         ])
 
         rotate([0,0,90])
@@ -62,14 +62,14 @@ box(
         translate([
              ((bottom_length + 2) / 2) - 10,
             0,
-            wall_height - 15
+            wall_height - 5
         ])
 
         rotate([0,0,90])
 
         hose_slot(
             50,
-            12,
+            10,
             20
         );
     }

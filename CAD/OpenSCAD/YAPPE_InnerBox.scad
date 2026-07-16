@@ -7,7 +7,7 @@ include <YAPPE_Parameters.scad>
 
 use <Modules/box.scad>
 use <Modules/bridge.scad>
-
+use <Modules/cable_tie_cutout.scad>
 use <Modules/pump_mount_pattern.scad>
 use <Modules/rain_grid.scad>
 
@@ -121,8 +121,8 @@ module inner_box()
         //--------------------------------------------------
 
         translate([
-            -(bottom_length / 2),
-            0,
+            -(bottom_length / 2 ),
+            10,
             wall_height - 15
         ])
 
@@ -149,9 +149,75 @@ module inner_box()
 
         hose_slot(
             50,
-            12,
+            10,
             20
         );
+		
+		//--------------------------------------------------
+		// Bridge 1 - cable tie cutout #1
+		//--------------------------------------------------
+
+		translate([
+			-25,
+			-21.5,
+			bottom_thickness
+		])
+
+		cable_tie_cutout(
+			6,
+			bridge_width + 2,
+			3
+		);
+
+
+		//--------------------------------------------------
+		// Bridge 1 - cable tie cutout #2
+		//--------------------------------------------------
+
+		translate([
+			 25,
+			-21.5,
+			bottom_thickness
+		])
+
+		cable_tie_cutout(
+			6,
+			bridge_width + 2,
+			3
+		);
+		
+		//--------------------------------------------------
+		// Bridge 2 - cable tie cutout #1
+		//--------------------------------------------------
+
+		translate([
+			-25,
+			 21.5,
+			bottom_thickness
+		])
+
+		cable_tie_cutout(
+			6,
+			bridge_width + 2,
+			3
+		);
+
+
+		//--------------------------------------------------
+		// Bridge 2 - cable tie cutout #2
+		//--------------------------------------------------
+
+		translate([
+			 25,
+			 21.5,
+			bottom_thickness
+		])
+
+		cable_tie_cutout(
+			6,
+			bridge_width + 2,
+			3
+		);
     }
 }
 
